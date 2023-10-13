@@ -37,14 +37,14 @@ if __name__ == '__main__':
 
     ######################################################################
     # TODO: set these parameters correctly
-    private_key = my_private_key
+    private_key = bob_secret_key_BCY
     public_key = private_key.pub
     address = P2PKHBitcoinAddress.from_pubkey(public_key)
 
     amount_to_send = 0.0001 # amount of BTC in the output you're splitting minus fee
     txid_to_spend = (
-        'ef6716dfeb8a34e0ba504207a3cd644623a563b7345c1f838ea295cccf7813f5')
-    utxo_index = 1 # index of the output you are spending, indices start at 0
+        '15980834644bc7cdf4bb6789976da304cd91c12a0c0cb602f57df1f7bca7d1ee')
+    utxo_index = 0 # index of the output you are spending, indices start at 0
     n = 9 # number of outputs to split the input into
     # For n, choose a number larger than what you immediately need, 
     # in case you make mistakes.

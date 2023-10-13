@@ -11,4 +11,27 @@
 #            Why can't this be solved with a simple 1-of-2 multisig? 
 #
 
+1) The ScriptPubkey has two different ways it can be redeemed which are differentiated by an OP_IF
+OP_ELSE clause, hence, the way to redeem the UTXO can be determined by including either OP_FALSE 
+or OP_TRUE in the ScriptSig. The first way is used when the swap goes smoothly: B provides the secret x
+and his signature and the UTXO can be redeemed. The second way is used in case one of the parties suddenly
+doesn't stick to the protocol. The participant who created the UTXO has the signature of the other
+participant on the spending UTXO that just refunds the coins (as part of the protocol), by signing
+this spending UTXO himself, the signatures of both participants are provided and the UTXO which was 
+supposed to be used for the swap can just be returned to the original owner.
 
+2) The ScriptPubkey essentially locks the coins to be swapped for a fixed period of time
+within which either the swap is conducted as intended (as both parties signed the other party's 
+refund UTXO, posted their swap UTXO on chain, the party with knowledge of the key redeemed the 
+other party's swap UTXO revealing the secret and allowing the other party to also redeem the swap
+UTXO) or one of the parties turned out to be unfaithful. In this case, after the time has 
+passed, the original owner can simply get a refund of the fixed amount, as the signature of 
+the refund UTXO by the other party was provided before the swap UTXO was posted on chain.
+
+3) If Bob doesn't redeem the script within the fixed time period, Alice can just sign 
+the redeem UTXO which has been already signed by Bob before Alice's swap UTXO was posted 
+on chain. As she has both signatures now, she can redeem her swap UTXO. 
+
+If the swap UTXO of Alice would just contain a 1-out-of-2 multisig, Alice could just 
+redeem the UTXO the moment she redeemed Bob's swap UTXO (or the other way around),
+thus ending up with both coins.

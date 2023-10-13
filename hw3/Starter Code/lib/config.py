@@ -40,6 +40,8 @@ my_address = P2PKHBitcoinAddress.from_pubkey(my_public_key)
 # Alice should have coins!!
 alice_secret_key_BTC = CBitcoinSecret(
     'cQZCAZcqwtmyf4Q7RzHRqAxk4MCMf8XnZg3aGbLaLL1qcnu4Hy6v')
+# transaction ae7a8b1b8d5df61f59a09c8fd3e31bb46b593cd7794b1bd4f45d6c6099ad923b
+# split transaction 
 
 # Only to be imported by bob.py
 bob_secret_key_BTC = CBitcoinSecret(
@@ -83,3 +85,4 @@ bob_public_key_BCY = bob_secret_key_BCY.pub
 bob_address_BCY = P2PKHBitcoinAddress.from_pubkey(bob_public_key_BCY)
 ######################################################################
 # transaction hash 15980834644bc7cdf4bb6789976da304cd91c12a0c0cb602f57df1f7bca7d1ee
+# split hash a4b35e94b83d7b7e9b05a3089a41927911532e86837889dccd6dac95444bb185
