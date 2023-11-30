@@ -1,0 +1,49 @@
+// =================== CS251 DEX Project =================== // 
+//                      Design Document                      //
+//                 Leon Kloker, James Sowmley                //
+// ========================================================= //  
+
+1. Explain why adding and removing liquidity to your exchange does not change the exchange rate.
+Liquidity providers must provide or withdraw equal values of both currencies, as determined by the exchange rate at the time.
+Since the exchange rate is defined by the amount of one currency divided by the amount of the other, adding or
+withdrawing liquidity to both in increments proportional to the exchange rate does not change this fraction, it just increases
+or decreases the numerator and denominator proportionally. Therefore, the exchange rate does not change.
+
+2. Explain your scheme for rewarding liquidity providers and justify the design decisions you made. How does it satisfy the liquidity rewards requirements outlined in Section 7?
+When a swap is done, the account executing the swap only receives (1-fees) times the amount in tokens or ETH it should receive according
+to the current exchange rate. The remaining amount of tokens or ETH just maintain in the liquidity pool (not in a separate rewards pool).
+Since the total amount of shares of the pool stays constant, each share increases slightly in value due to the "addition" of the 
+fees to the pool. Hence, when a LP removes liquidity, the value of the shares of the liquidity pool he possesses has increased according
+to the amount of transaction fees gathered. Moreover, when a new LP adds liquidity to the pool at time t after some transaction fees
+have already been collected, he has to pay slightly more per share than the LP that already owned a share when the transactions were
+executed. This is due to the increase in size of the pool with the gathered transaction fees. As the new LP has to effectively pay more
+per share of the pool, he does not gain value from the previous transactions fees. Thus, this implementation even fulfills the requirements
+for the extra credit as the increase in value per share of the pool leads to a relatively higher "pay-in" for a new LP.
+
+#############
+This design seems also to be the reason why removeAllLiquidity in the sanityCheck fails as it doesn't fail when the swapfee is set 
+to 0 as we didn't implement a separate rewards pool as requested for the basic implementation. However, we find this design to be superior
+to a separate rewards pool as the fees and their fair distribution are handled seemlessly.
+#############
+
+3. Describe at least one method you used to minimize your exchange contract's gas usage. Why was this method effective?
+The minimum and maximum exchange rate based on the maximum slippage percentage are calculated in exchange.js and only passed to
+the contract functions. The contract only checks if the current exchange rate is within the given interval. In general, only the calculations
+needed to verify the validity of each transaction are done on-chain as this is needed to safeguard the security of the contract even
+when used without the JS interface. This reduces the amount of on-chain computation and thus gas usage to a minimum and makes
+interacting with the contract as cheap as possible.
+
+
+4. Optional Feedback:
+4a. How much time did you spend on the assignment?
+25h
+
+4b. What is one thing that would have been useful to know before starting the assignment?
+More details on the exact implementation (eg. storing tokens or eth values in Wei or attotokens or storing both of them
+as they are or storing only eth in wei and the tokens in their original size.) Moreover, underflow issues
+due to ethers.utils.parseEther returning a string and casting to BigInt and so on turned out to be a massive pain.
+
+4c. If you could change one with about this assignment, what would you change?
+
+4d. Please feel free to include any other feedback you may have below.
+Takes a TON of time, could be less.
