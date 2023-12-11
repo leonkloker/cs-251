@@ -198,7 +198,7 @@ async function add_IOU(creditor, amount) {
 		cycle = []
 	}
 
-	var transaction = await BlockchainSplitwise.add_IOU(creditor, amount, cycle, cycle_val); //connect(provider.getSigner(debtor)).
+	var transaction = await BlockchainSplitwise.add_IOU(creditor, amount, cycle, cycle_val).connect(provider.getSigner(defaultAccount))
 }
 
 // =============================================================================
@@ -290,8 +290,6 @@ $("#myaccount").change(function() {
 		time = timeConverter(response)
 		$("#last_active").html(time)
 	});
-
-	BlockchainSplitwise = BlockchainSplitwise.connect(provider.getSigner(defaultAccount));
 });
 
 // Allows switching between accounts in 'My Account' and the 'fast-copy' in 'Address of person you owe

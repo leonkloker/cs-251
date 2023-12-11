@@ -12,7 +12,6 @@ merkle_proof_file = "merkle_proof.txt"   # File where merkle proof is written.
 MAXHEIGHT = 20             # Max height of Merkle tree
 NUM_LEAVES = 1000          # Number of leaves in Merkle Tree
 
-
 def write_merkle_proof(filename, merkle_proof: MerkleProof):
     """Helper function that outputs the merkle proof to a file in a format for 
        it to be read easily by the verifier."""
